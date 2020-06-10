@@ -85,7 +85,7 @@ public class MyProfileTest {
      * Test of myCourses method, of class MyProfile.
      */
     @Test
-    //it checks if course info is correctly working
+    //it checks if correct values of courses for current student is displayed
     public void testMyCourses() throws Exception {
         System.out.println("myCourses :");
         Connection con = MyConnection.getConnection();
@@ -118,6 +118,7 @@ public class MyProfileTest {
         }
     }
 
+    //It makes sure dropiing course function works properly
     @Test
     public void DropCourseButton() throws Exception {
         Connection con = MyConnection.getConnection();

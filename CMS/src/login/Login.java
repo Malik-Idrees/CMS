@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+User sign in class
  */
 package login;
 
@@ -13,11 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
-
 public class Login extends javax.swing.JFrame {
 
-    
-    
     /**
      * Creates new form Login
      */
@@ -230,38 +225,34 @@ public class Login extends javax.swing.JFrame {
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
-
+//It checks the sign in information and sign in users if username and password is correct
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
-        
-        String userId = studentIdField.getText(); 
+        String userId = studentIdField.getText();
         String pass = passwordField.getText();
-        try{
-            
-            Connection con=MyConnection.getConnection();
-            
+        try {
+
+            Connection con = MyConnection.getConnection();
+
             String sql = "SELECT * FROM `student` WHERE `id` =? AND `password` =?";
-            PreparedStatement pst=con.prepareStatement(sql);
-            
+            PreparedStatement pst = con.prepareStatement(sql);
+
             pst.setString(1, userId);
             pst.setString(2, pass);
-            
-            ResultSet rs=pst.executeQuery();
-            if(rs.next()){
-                
-                Dashboard db= new Dashboard(userId);
+
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+
+                Dashboard db = new Dashboard(userId);
                 db.setVisible(true);
                 db.setLocationRelativeTo(null);
                 this.dispose();
-                
-                
-            }
-            else{
-                JOptionPane.showMessageDialog(null,"Invalid Credentials");               
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid Credentials");
             }
             con.close();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null,e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
@@ -270,21 +261,21 @@ public class Login extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    int x,y;
+    int x, y;
     private void loginPanelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginPanelMouseDragged
-        int xx= evt.getXOnScreen();
-        int yy= evt.getYOnScreen();
-        this.setLocation(xx-x,yy-y);
+        int xx = evt.getXOnScreen();
+        int yy = evt.getYOnScreen();
+        this.setLocation(xx - x, yy - y);
     }//GEN-LAST:event_loginPanelMouseDragged
 
     private void loginPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginPanelMousePressed
-        x= evt.getX();
-        y=evt.getY();
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_loginPanelMousePressed
 
     private void signUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpActionPerformed
         // TODO add your handling code here:
-        SignUp su= new SignUp();
+        SignUp su = new SignUp();
         su.setVisible(true);
         su.setLocationRelativeTo(null);
     }//GEN-LAST:event_signUpActionPerformed

@@ -1,5 +1,5 @@
-
 package CourseReviews;
+//a class to initiate a commentor 
 
 public class CourseCommentAndCommentor {
 
@@ -19,8 +19,6 @@ public class CourseCommentAndCommentor {
         this.comment = comment;
     }
 
-    
-
     public String getCommentor() {
         return commentor;
     }
@@ -28,7 +26,5 @@ public class CourseCommentAndCommentor {
     public void setCommentor(String commentor) {
         this.commentor = commentor;
     }
-    
+
 }
-
-

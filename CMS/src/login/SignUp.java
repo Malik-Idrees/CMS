@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+User sign Up class
  */
 package login;
 
@@ -212,38 +210,36 @@ public class SignUp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_idActionPerformed
 
+    //User sign-up method it inserts the new user into database
     private void enterDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterDetailsActionPerformed
         // TODO add your handling code here:
-      
-       try{ 
-        Connection con= MyConnection.getConnection();
-        // the mysql insert statement
-      String query = " insert into student (id, fname, lname, age, semester, password, major, Email, minor)"
-        + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-      // create the mysql insert preparedstatement
-      PreparedStatement preparedStmt = con.prepareStatement(query);
-      preparedStmt.setInt (1, Integer.parseInt(id.getText()));
-      preparedStmt.setString (2, fname.getText());
-      preparedStmt.setString (3, lname.getText() );
-      preparedStmt.setInt(4, Integer.parseInt(age.getText()));
-      preparedStmt.setInt(5, Integer.parseInt(sem.getText()));
-      preparedStmt.setString (6, pass.getText() );
-      preparedStmt.setString(7, (major.getText()));
-      preparedStmt.setString(8, email.getText());
-      preparedStmt.setString(9, (minor.getText()));
-      
+        try {
+            Connection con = MyConnection.getConnection();
+            // the mysql insert statement
+            String query = " insert into student (id, fname, lname, age, semester, password, major, Email, minor)"
+                    + " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-      // execute the preparedstatement
-      preparedStmt.execute();
-      
-      con.close();
-      JOptionPane.showMessageDialog(null, "Success!");
-    }
-    catch (Exception e)
-    {
-      JOptionPane.showMessageDialog(null, e.getMessage());
-    }
+            // create the mysql insert preparedstatement
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            preparedStmt.setInt(1, Integer.parseInt(id.getText()));
+            preparedStmt.setString(2, fname.getText());
+            preparedStmt.setString(3, lname.getText());
+            preparedStmt.setInt(4, Integer.parseInt(age.getText()));
+            preparedStmt.setInt(5, Integer.parseInt(sem.getText()));
+            preparedStmt.setString(6, pass.getText());
+            preparedStmt.setString(7, (major.getText()));
+            preparedStmt.setString(8, email.getText());
+            preparedStmt.setString(9, (minor.getText()));
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+
+            con.close();
+            JOptionPane.showMessageDialog(null, "Success!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }//GEN-LAST:event_enterDetailsActionPerformed
 
     private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed

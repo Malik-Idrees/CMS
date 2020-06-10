@@ -61,6 +61,7 @@ public class AccountInfoTest {
         con.close();
     }
 
+    //The Test confirms that the user info is updated properly
     @Test
     public void testUpdateAccountInfo() throws SQLException {
         try {

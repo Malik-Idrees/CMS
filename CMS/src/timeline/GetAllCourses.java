@@ -1,10 +1,10 @@
-
 package timeline;
 
 import java.sql.Time;
 
-
+//A class to create an instance of course
 public class GetAllCourses {
+
     private String id;
     private String location;
     private Time start;
@@ -32,9 +32,9 @@ public class GetAllCourses {
         this.location = location;
         this.start = start;
         this.end = end;
-        this.semester=semester;
+        this.semester = semester;
     }
-    
+
     public String getId() {
         return id;
     }

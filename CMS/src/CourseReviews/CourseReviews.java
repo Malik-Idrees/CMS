@@ -1,4 +1,3 @@
-
 package CourseReviews;
 
 import cms.MyConnection;
@@ -14,7 +13,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
-
 
 public class CourseReviews extends javax.swing.JInternalFrame {
 
@@ -37,24 +35,23 @@ public class CourseReviews extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
         populateCourseList();
-        
+
     }
 
     public void populateCourseList() throws SQLException {
 
-      
         Connection con = MyConnection.getConnection();
         DefaultListModel model = new DefaultListModel(); //create a new list model
 
-        String query = "select id from course where semester in (select semester from student where id="+userId+")";
+        String query = "select id from course where semester in (select semester from student where id=" + userId + ")";
         Statement statement = con.createStatement();
         ResultSet resultSet = statement.executeQuery(query); //run your query
 
         while (resultSet.next()) //go through each row that your query returns
         {
-            
+
             String courseName = resultSet.getString("id");
-            
+
             model.addElement(courseName); //add each item to the model
         }
         courseList.setModel(model);
@@ -91,7 +88,7 @@ public class CourseReviews extends javax.swing.JInternalFrame {
             String courseId;
             //courseId = courseList.getModel().getElementAt(courseList.getSelectedIndex());
             courseId = (String) courseList.getSelectedValue();
-            
+
             String searchQuery = "select fname,comment from student,comments where student.id=comments.studentid AND comments.courseid='" + courseId + "'";
             rs = st.executeQuery(searchQuery);
             CourseCommentAndCommentor comments;
@@ -112,30 +109,31 @@ public class CourseReviews extends javax.swing.JInternalFrame {
 
         return commentList;
     }
+//The method post comment on behalf of current sign-in user
 
     public void postComment() throws SQLException {
-        
+
         try {
 
             Connection con = MyConnection.getConnection();
             // String comment = commentSection.getText();
             //courseId = courseList.getModel().getElementAt(courseList.getSelectedIndex());
             String courseId = (String) courseList.getSelectedValue();
-         
             String sql = "insert into comments(studentid, courseid, comment) values (?, ?, ?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, Integer.parseInt(userId));
             pst.setString(2, courseId);
             pst.setString(3, commentSection.getText());
-
             pst.execute();
             con.close();
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Only one feedback is allowed per course");
         }
 
     }
+
+    //This method returns the list of students of a particular course
+    //If you select a course in course review section(GUI-Graphical user interface) this method will automatically list all students taking that course
     public ArrayList<GetAttendees> allStudents() throws SQLException {
         ArrayList<GetAttendees> studentList = new ArrayList<>();
         Connection con = null;
@@ -146,8 +144,8 @@ public class CourseReviews extends javax.swing.JInternalFrame {
             Statement st;
             ResultSet rs;
             st = con.createStatement();
-            String searchQuery = "select * from student where id in (select studentid from studenthastaken where courseid='"+course+"')";
-         
+            String searchQuery = "select * from student where id in (select studentid from studenthastaken where courseid='" + course + "')";
+
             rs = st.executeQuery(searchQuery);
             GetAttendees student;
 
@@ -171,7 +169,7 @@ public class CourseReviews extends javax.swing.JInternalFrame {
         return studentList;
     }
 
-    // function to display data in jtable
+    // function to display ALL students in our database
     public void fillStudentTable() throws SQLException {
         ArrayList<GetAttendees> students = allStudents();
         DefaultTableModel model = new DefaultTableModel();
@@ -179,7 +177,7 @@ public class CourseReviews extends javax.swing.JInternalFrame {
         Object[] row = new Object[5];
 
         for (int i = 0; i < students.size(); i++) {
-            
+
             row[0] = students.get(i).getId();
             row[1] = students.get(i).getFname();
             row[2] = students.get(i).getLname();
@@ -378,13 +376,13 @@ public class CourseReviews extends javax.swing.JInternalFrame {
     private void postCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postCommentActionPerformed
         try {
             postComment();
-            
+
             DefaultTableModel model = (DefaultTableModel) courseComments.getModel();
             model.setRowCount(0);
             fillCourseComments();
-        } catch(ArrayIndexOutOfBoundsException a){
-            JOptionPane.showMessageDialog(null,  "No Item Selected");
-        }catch (SQLException ex) {
+        } catch (ArrayIndexOutOfBoundsException a) {
+            JOptionPane.showMessageDialog(null, "No Item Selected");
+        } catch (SQLException ex) {
             Logger.getLogger(CourseReviews.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_postCommentActionPerformed
@@ -398,13 +396,12 @@ public class CourseReviews extends javax.swing.JInternalFrame {
             // TODO add your handling code here:
             fillCourseComments();
             fillStudentTable();
-        } catch(ArrayIndexOutOfBoundsException a){
-            JOptionPane.showMessageDialog(null,  "No Item Selected");
-        }catch (SQLException ex) {
+        } catch (ArrayIndexOutOfBoundsException a) {
+            JOptionPane.showMessageDialog(null, "No Item Selected");
+        } catch (SQLException ex) {
             Logger.getLogger(CourseReviews.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_courseListMousePressed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable attendeesTable;

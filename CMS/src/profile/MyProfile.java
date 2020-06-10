@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package profile;
 
 import cms.MyConnection;
@@ -21,105 +20,110 @@ import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
-
 public class MyProfile extends javax.swing.JInternalFrame {
 
-    /** Creates new form MyProfile */
+    /**
+     * Creates new form MyProfile
+     */
     String userId;
+
     public MyProfile() {
         initComponents();
-        BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI();
+        BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
     }
-    public MyProfile(String userId) throws SQLException{
+
+    public MyProfile(String userId) throws SQLException {
         initComponents();
-        BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI();
+        BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-        this.userId= userId;
+        this.userId = userId;
         populateFriendList(userId);
         fillCourseTable();
     }
-public void populateFriendList(String id) throws SQLException
-{
-    
-    Connection con= MyConnection.getConnection();
-    DefaultListModel model = new DefaultListModel(); //create a new list model
+    //This methods fills the table with friends of currently sign-in user
 
-    String query="select fname, lname from student where id in (select studentid2 from friends where studentid1="+ id +")";
-    Statement statement = con.createStatement();
-    ResultSet resultSet = statement.executeQuery(query); //run your query
+    public void populateFriendList(String id) throws SQLException {
 
-    while (resultSet.next()) //go through each row that your query returns
-    {
-        String fname = resultSet.getString("fname"); 
-        String lname =resultSet.getString("lname");
-        String name= fname+" "+lname;
-        model.addElement(name); //add each item to the model
+        Connection con = MyConnection.getConnection();
+        DefaultListModel model = new DefaultListModel(); //create a new list model
+
+        String query = "select fname, lname from student where id in (select studentid2 from friends where studentid1=" + id + ")";
+        Statement statement = con.createStatement();
+        ResultSet resultSet = statement.executeQuery(query); //run your query
+
+        while (resultSet.next()) //go through each row that your query returns
+        {
+            String fname = resultSet.getString("fname");
+            String lname = resultSet.getString("lname");
+            String name = fname + " " + lname;
+            model.addElement(name); //add each item to the model
+        }
+        friendList.setModel(model);
+
+        resultSet.close();
+        statement.close();
+
     }
-    friendList.setModel(model);
+//It returns an array/list of all courses of current student...later we will use this array in 
+//fillCourseTable() methodto fill our course table
 
-    resultSet.close();
-    statement.close();
-
-}
-
-public ArrayList<GetMyCourses> myCourses() throws SQLException
-    {
+    public ArrayList<GetMyCourses> myCourses() throws SQLException {
         ArrayList<GetMyCourses> courseList = new ArrayList<>();
         Connection con = null;
-        try{
+        try {
             con = MyConnection.getConnection();
-            
+
             Statement st;
             ResultSet rs;
             st = con.createStatement();
-            String searchQuery = "select * from course where id in (select courseid from studenthastaken where studentid="+ userId + ")";
+            String searchQuery = "select * from course where id in (select courseid from studenthastaken where studentid=" + userId + ")";
             rs = st.executeQuery(searchQuery);
             GetMyCourses courses;
-            
-            while(rs.next())
-            {
-                
+
+            while (rs.next()) {
+
                 courses = new GetMyCourses(
-                                 rs.getString("id"),
-                                 rs.getString("location"),
-                                 rs.getTime("start_at"),
-                                 rs.getTime("end_at")
-                                );
+                        rs.getString("id"),
+                        rs.getString("location"),
+                        rs.getTime("start_at"),
+                        rs.getTime("end_at")
+                );
                 courseList.add(courses);
             }
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
-        }finally{
-            con.close();        }
-        
+        } finally {
+            con.close();
+        }
+
         return courseList;
     }
-    // function to display data in jtable
-    public void fillCourseTable() throws SQLException
-    {
+
+    // This method displays all courses of current user
+    public void fillCourseTable() throws SQLException {
         ArrayList<GetMyCourses> courses = myCourses();
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new Object[]{"ID","Location","Start Time", "End Time"});
+        model.setColumnIdentifiers(new Object[]{"ID", "Location", "Start Time", "End Time"});
         Object[] row = new Object[4];
-        
-        for(int i = 0; i < courses.size(); i++)
-        {
+
+        for (int i = 0; i < courses.size(); i++) {
             row[0] = courses.get(i).getId();
             row[1] = courses.get(i).getLocation();
             row[2] = courses.get(i).getStart();
             row[3] = courses.get(i).getEnd();
-            
+
             model.addRow(row);
         }
-       myCourseTable.setModel(model);
-       
+        myCourseTable.setModel(model);
+
     }
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -243,42 +247,40 @@ public ArrayList<GetMyCourses> myCourses() throws SQLException
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //this method deletes the selected course from student course list
     private void dropButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropButtonActionPerformed
-try{
-    // TODO add your handling code here:
-        Connection con= MyConnection.getConnection();
-        DefaultTableModel model = (DefaultTableModel) myCourseTable.getModel();
-        
-        
-        int row = myCourseTable.getSelectedRow();
-        String courseId = myCourseTable.getModel().getValueAt(row, 0).toString();
+        try {
+            // TODO add your handling code here:
+            Connection con = MyConnection.getConnection();
+            DefaultTableModel model = (DefaultTableModel) myCourseTable.getModel();
 
-        
-        String query = "delete from studenthastaken where studentid="+ userId+" and courseid='"+courseId+"'";
-        PreparedStatement pst;
-        try {
-            pst = con.prepareStatement(query);
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Congratulation !!");
-            con.close();
-            
-        }
-        catch(ArrayIndexOutOfBoundsException a){
-            JOptionPane.showMessageDialog(null,  "No Item Selected");
-        }catch (Exception e) {
-            JOptionPane.showMessageDialog(null,  e.getMessage());
-        }
-        
-        model.setRowCount(0);
-        try {
-            fillCourseTable();
-        } catch (SQLException ex) {
-            Logger.getLogger(MyProfile.class.getName()).log(Level.SEVERE, null, ex);
-        }}catch(ArrayIndexOutOfBoundsException a){
-            JOptionPane.showMessageDialog(null,  "No Item Selected");
+            int row = myCourseTable.getSelectedRow();
+            String courseId = myCourseTable.getModel().getValueAt(row, 0).toString();
+
+            String query = "delete from studenthastaken where studentid=" + userId + " and courseid='" + courseId + "'";
+            PreparedStatement pst;
+            try {
+                pst = con.prepareStatement(query);
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Congratulation !!");
+                con.close();
+
+            } catch (ArrayIndexOutOfBoundsException a) {
+                JOptionPane.showMessageDialog(null, "No Item Selected");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+
+            model.setRowCount(0);
+            try {
+                fillCourseTable();
+            } catch (SQLException ex) {
+                Logger.getLogger(MyProfile.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (ArrayIndexOutOfBoundsException a) {
+            JOptionPane.showMessageDialog(null, "No Item Selected");
         }
     }//GEN-LAST:event_dropButtonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton dropButton;

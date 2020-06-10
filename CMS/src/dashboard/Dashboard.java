@@ -1,4 +1,3 @@
-
 package dashboard;
 
 import CourseReviews.CourseReviews;
@@ -18,7 +17,6 @@ import javafx.scene.layout.Border;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 
-
 public class Dashboard extends javax.swing.JFrame {
 
     /**
@@ -35,25 +33,22 @@ public class Dashboard extends javax.swing.JFrame {
         initComponents();
         setName(id);
     }
+//Sets the name of currently signed in student
 
     public void setName(String id) {
         try {
-
             Connection con = MyConnection.getConnection();
-
             String sql = "SELECT * FROM `student` WHERE `id` =" + id;
             // create the java statement
             Statement st = con.createStatement();
-
             // execute the query, and get a java resultset
             ResultSet rs = st.executeQuery(sql);
-
             // iterate through the java resultset
             String firstName = null;
             String lastName = null;
             while (rs.next()) {
-                 firstName = rs.getString("fname");
-                 lastName = rs.getString("lname");
+                firstName = rs.getString("fname");
+                lastName = rs.getString("lname");
             }
             currentUser.setText(firstName + " " + lastName);
             con.close();
@@ -327,9 +322,9 @@ public class Dashboard extends javax.swing.JFrame {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
         removeColors();
-        jPanel3.setBackground(new Color(0,0,153));
+        jPanel3.setBackground(new Color(0, 0, 153));
         rightPanel.removeAll();
-        AccountInfo ai= new AccountInfo(userId);
+        AccountInfo ai = new AccountInfo(userId);
         rightPanel.add(ai).setVisible(true);
         rightPanel.revalidate();
         rightPanel.repaint();
@@ -338,7 +333,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         removeColors();
-        jPanel1.setBackground(new Color(0,0,153));
+        jPanel1.setBackground(new Color(0, 0, 153));
         rightPanel.removeAll();
         Timeline fc = null;
         try {
@@ -347,31 +342,31 @@ public class Dashboard extends javax.swing.JFrame {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
         rightPanel.add(fc).setVisible(true);
-        rightPanel.revalidate(); 
+        rightPanel.revalidate();
         rightPanel.repaint();
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
         removeColors();
-        jPanel5.setBackground(new Color(0,0,153));
+        jPanel5.setBackground(new Color(0, 0, 153));
         rightPanel.removeAll();
         MyProfile mp = null;
         try {
             mp = new MyProfile(userId);
             rightPanel.add(mp).setVisible(true);
-            rightPanel.revalidate(); 
+            rightPanel.revalidate();
             rightPanel.repaint();
         } catch (SQLException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
         // TODO add your handling code here:rightPanel.removeAll();
         removeColors();
-        jPanel6.setBackground(new Color(0,0,153));
+        jPanel6.setBackground(new Color(0, 0, 153));
         rightPanel.removeAll();
         CourseReviews cr = null;
         try {
@@ -382,7 +377,7 @@ public class Dashboard extends javax.swing.JFrame {
         rightPanel.add(cr).setVisible(true);
         rightPanel.revalidate();
         rightPanel.repaint();
-        
+
     }//GEN-LAST:event_jLabel6MousePressed
 
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
@@ -424,14 +419,14 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
     }
-    void removeColors(){
-        Color c= new Color(0, 102, 204);
+
+    void removeColors() {
+        Color c = new Color(0, 102, 204);
         jPanel3.setBackground(c);
         jPanel1.setBackground(c);
         jPanel5.setBackground(c);
         jPanel6.setBackground(c);
     }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton close;

@@ -79,7 +79,7 @@ public class TimelineTest {
         }
     }
 
-    //
+    //Mkaes sure correct major and minor of a student are returned
     @Test
     public void testGetMajorMinor() throws Exception {
         System.out.println("Method:getMajorMinor ... returns major and minor of current student");

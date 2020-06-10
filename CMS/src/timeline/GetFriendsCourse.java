@@ -1,17 +1,16 @@
-
 package timeline;
 
-
-    
+//A class to create an instance of a friend fname+lname along with its course
 public class GetFriendsCourse {
+
     private String fname;
     private String lname;
     private String course;
 
-    public GetFriendsCourse( String fname, String lname,String course) {
+    public GetFriendsCourse(String fname, String lname, String course) {
         this.course = course;
-        this.fname = fname;  
-        this.lname = lname;  
+        this.fname = fname;
+        this.lname = lname;
     }
 
     public String getFname() {
@@ -38,9 +37,4 @@ public class GetFriendsCourse {
         this.course = course;
     }
 
-   
-
-   
-    
-    
 }

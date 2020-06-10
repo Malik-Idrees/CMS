@@ -1,11 +1,10 @@
-
 package profile;
 
 import java.sql.Time;
 
-
+//This class is Used to create an instances of courses so we can display them in a list/table
 public class GetMyCourses {
-    
+
     private String id;
     private String location;
     private Time start;
@@ -25,7 +24,7 @@ public class GetMyCourses {
         this.start = start;
         this.end = end;
     }
-    
+
     public String getId() {
         return id;
     }
@@ -49,7 +48,5 @@ public class GetMyCourses {
     public void setStart(Time start) {
         this.start = start;
     }
-    
-    
-    
+
 }

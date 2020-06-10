@@ -1,4 +1,3 @@
-
 package accountInfo;
 
 import cms.MyConnection;
@@ -9,31 +8,32 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
-
 public class AccountInfo extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form AccountInfo
      */
     String id;
-    public AccountInfo() {
-        
-        initComponents();
-        BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI();
-        bi.setNorthPane(null);
-        
-    }
-    public AccountInfo(String id){
-        initComponents();
-        BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI();
-        bi.setNorthPane(null);
-        this.id=id;
-        fillFields(id);
-        
-    }
-    public void fillFields(String id){
-         try {
 
+    public AccountInfo() {
+
+        initComponents();
+        BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
+        bi.setNorthPane(null);
+
+    }
+
+    public AccountInfo(String id) {
+        initComponents();
+        BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
+        bi.setNorthPane(null);
+        this.id = id;
+        fillFields(id);
+    }
+
+    //This Method fills the details of currently logged in user i.e name,age,semester etc in Account info tab of GUI(Graphical User Interface)
+    public void fillFields(String id) {
+        try {
             Connection con = MyConnection.getConnection();
 
             String sql = "SELECT * FROM `student` WHERE `id` =" + id;
@@ -47,22 +47,24 @@ public class AccountInfo extends javax.swing.JInternalFrame {
             String firstName = null;
             String lastName = null;
             while (rs.next()) {
-                 sId.setText(id);
-                 fname.setText(rs.getString("fname"));
-                 lname.setText(rs.getString("lname"));
-                 age.setText(rs.getString("age"));
-                 sem.setText(rs.getString("semester"));
-                 email.setText(rs.getString("Email"));
-                 majorField.setText(rs.getString("major"));
-                 minorField.setText(rs.getString("minor"));
+                sId.setText(id);
+                fname.setText(rs.getString("fname"));
+                lname.setText(rs.getString("lname"));
+                age.setText(rs.getString("age"));
+                sem.setText(rs.getString("semester"));
+                email.setText(rs.getString("Email"));
+                majorField.setText(rs.getString("major"));
+                minorField.setText(rs.getString("minor"));
             }
             con.close();
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    public void updateAccountInfo(String id){
+
+    //This Method updates the user information of current user to new values when update button is pressed in Account info tab of GUI
+    public void updateAccountInfo(String id) {
         try {
 
             Connection con = MyConnection.getConnection();
@@ -77,12 +79,11 @@ public class AccountInfo extends javax.swing.JInternalFrame {
             pst.setString(6, majorField.getText());
             pst.setString(7, minorField.getText());
             pst.setInt(8, Integer.parseInt(id));
-            
+
             pst.executeUpdate();
 
-            
             con.close();
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -296,7 +297,6 @@ public class AccountInfo extends javax.swing.JInternalFrame {
     private void majorFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_majorFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_majorFieldActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField age;

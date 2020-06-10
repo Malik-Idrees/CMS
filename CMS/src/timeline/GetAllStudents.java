@@ -1,13 +1,14 @@
-
 package timeline;
 
-
+//A class to create an instance of student
 public class GetAllStudents {
+
     private String id;
     private String fname;
     private String lname;
     private String semester;
     private String Email;
+
     public String getId() {
         return id;
     }
@@ -55,6 +56,5 @@ public class GetAllStudents {
         this.semester = semester;
         this.Email = Email;
     }
-    
-    
+
 }

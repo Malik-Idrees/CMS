@@ -24,7 +24,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Timeline extends javax.swing.JInternalFrame {
 
-   
     String[] courses;
     String userid;
 
@@ -44,10 +43,10 @@ public class Timeline extends javax.swing.JInternalFrame {
         fillFriendsTable();
         fillCourseTable();
         fillStudentTable();
-      
-    }
-    //provide a list of friends along with their course name
 
+    }
+
+    //returns a Array/list of friends(names) along with their course name
     public ArrayList<GetFriendsCourse> ListFriends() {
         ArrayList<GetFriendsCourse> usersList = new ArrayList<GetFriendsCourse>();
 
@@ -70,15 +69,14 @@ public class Timeline extends javax.swing.JInternalFrame {
                 );
                 usersList.add(friend);
             }
-
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-
         return usersList;
     }
 
-    // function to display data in jtable
+    // function to display data in friends course table in GUI
+    //it fills the table with friends name and their courses
     public void fillFriendsTable() {
         ArrayList<GetFriendsCourse> users = ListFriends();
         DefaultTableModel model = new DefaultTableModel();
@@ -96,6 +94,8 @@ public class Timeline extends javax.swing.JInternalFrame {
 
     }
 
+    //It returns a list/Array of all the courses that student are allowed to take in a particular semester
+    //if i am in 1st semester then it will have all courses of 1st semester that university offers
     public ArrayList<GetAllCourses> allCourses() throws SQLException {
         ArrayList<GetAllCourses> courseList = new ArrayList<>();
         Connection con = null;
@@ -129,6 +129,7 @@ public class Timeline extends javax.swing.JInternalFrame {
         return courseList;
     }
 
+    //It returns a list/Array of specific courses based on search query
     public ArrayList<GetAllCourses> allCourses(String searchedWord) throws SQLException {
         ArrayList<GetAllCourses> courseList = new ArrayList<>();
         Connection con = null;
@@ -162,7 +163,7 @@ public class Timeline extends javax.swing.JInternalFrame {
         return courseList;
     }
 
-    // function to display data in jtable
+    // function to fill the all courses table
     public void fillCourseTable() throws SQLException {
         ArrayList<GetAllCourses> courses = allCourses();
         DefaultTableModel model = new DefaultTableModel();
@@ -182,6 +183,7 @@ public class Timeline extends javax.swing.JInternalFrame {
 
     }
 
+//It returns an Array/list of all students registered in our system
     public ArrayList<GetAllStudents> allStudents() throws SQLException {
         ArrayList<GetAllStudents> studentList = new ArrayList<>();
         Connection con = null;
@@ -215,7 +217,7 @@ public class Timeline extends javax.swing.JInternalFrame {
         return studentList;
     }
 
-    // function to display data in jtable
+    // function to display data all registered students table
     public void fillStudentTable() throws SQLException {
         ArrayList<GetAllStudents> students = allStudents();
         DefaultTableModel model = new DefaultTableModel();
@@ -481,6 +483,8 @@ public class Timeline extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+//It adds the selected course into student course list 
+//i.e  that course will be added to your course list
 
     private void addCourse(String courseName) {
         Connection con = MyConnection.getConnection();
@@ -497,6 +501,7 @@ public class Timeline extends javax.swing.JInternalFrame {
 
         }
     }
+//It returns the major and minor of current student signed in
 
     String[] getMajorMinor(Integer userid) throws SQLException {
 
@@ -513,6 +518,7 @@ public class Timeline extends javax.swing.JInternalFrame {
         return arr;
 
     }
+//This Method adds the course to your list course list only if its allowed in your major and minor
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String major = null;
         String minor = null;
@@ -521,7 +527,6 @@ public class Timeline extends javax.swing.JInternalFrame {
             int inum = Integer.parseInt(this.userid);
             major = getMajorMinor(inum)[0];
             minor = getMajorMinor(inum)[1];
-            
 
             Connection con = MyConnection.getConnection();
             DefaultTableModel model = (DefaultTableModel) allCoursesTable.getModel();
@@ -544,11 +549,10 @@ public class Timeline extends javax.swing.JInternalFrame {
                 courses = new String[counter]; // Declare and Initialize your array
                 counter = 0;
                 courses[counter] = rs.getString("courses");
-                
+
                 while (rs.next()) {
                     counter++;
                     courses[counter] = rs.getString("courses");
-                    
 
                 }
 
@@ -558,7 +562,7 @@ public class Timeline extends javax.swing.JInternalFrame {
             };
 
             for (String element : courses) {
-               
+
 //checking if the course we want to add is in our major or minor subjects if it is It is added
                 if (element.equals(courseId)) {
                     matched = true;
@@ -583,6 +587,7 @@ public class Timeline extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //This method adds the selected student from all students list to your friends list
     private void addFriendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFriendButtonActionPerformed
         // TODO add your handling code here:
         Connection con = MyConnection.getConnection();
@@ -611,6 +616,7 @@ public class Timeline extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_addFriendButtonActionPerformed
 
+    //It refills the courses table with desired search words
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
         String searchedWord = searchBar.getText();
@@ -638,7 +644,6 @@ public class Timeline extends javax.swing.JInternalFrame {
         allCoursesTable.setModel(model);
 
     }//GEN-LAST:event_searchButtonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable CourseFriendTable;

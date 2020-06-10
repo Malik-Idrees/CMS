@@ -1,13 +1,14 @@
-
 package CourseReviews;
 
-
+//to create course attendees instances
 public class GetAttendees {
+
     private String id;
     private String fname;
     private String lname;
     private String semester;
     private String Email;
+
     public String getId() {
         return id;
     }
@@ -55,6 +56,5 @@ public class GetAttendees {
         this.semester = semester;
         this.Email = Email;
     }
-    
-    
+
 }
