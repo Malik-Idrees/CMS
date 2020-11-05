@@ -1,7 +1,8 @@
 # CMS
 A Java Swing Based University Management System With Mysql
 # configuration
-Configure myConnection.java in CMS/Src/cms
+Configure myConnection.java in CMS/Src/cms update it with your credentials
+con = DriverManager.getConnection("jdbc:mysql://localhost:3306/databasename", "username", "password");
 # database setup
 Create Scheme ums in mysql workbench or using similiar utility.
 Select the database as default and then populate it with uml.sql
